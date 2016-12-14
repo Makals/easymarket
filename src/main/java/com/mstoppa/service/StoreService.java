@@ -2,10 +2,10 @@ package com.mstoppa.service;
 
 import com.mstoppa.model.Store;
 import com.mstoppa.model.repository.StoreRepository;
-import com.mstoppa.view.resource.StoreResource;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StoreService {
@@ -19,5 +19,9 @@ public class StoreService {
 
     public Store createStore(Store store) {
         return storeRepository.save(store);
+    }
+
+    public List<Store> listStores() {
+        return storeRepository.findAll();
     }
 }

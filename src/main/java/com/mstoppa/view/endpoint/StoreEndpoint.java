@@ -7,6 +7,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 public class StoreEndpoint {
 
@@ -35,5 +39,19 @@ public class StoreEndpoint {
         BeanUtils.copyProperties(store, storeResource);
 
         return storeResource;
+    }
+
+    @RequestMapping(value = "/stores", method = RequestMethod.GET)
+    public List<StoreResource> listStores() {
+        List<Store> stores = storeService.listStores();
+
+        List<StoreResource> storeResources = stores.stream()
+                .map(store -> {
+                    StoreResource storeResource = new StoreResource();
+                    BeanUtils.copyProperties(store, storeResource);
+                    return storeResource;
+                }).collect(Collectors.toList());
+
+        return storeResources;
     }
 }

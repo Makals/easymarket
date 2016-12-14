@@ -24,6 +24,7 @@ public class BuyListService {
 
         List<Offer> bestOffers = offers.stream()
                 .filter(offer -> offer.isAvailable())
+                .filter(offer -> offer.getPrice() != null)
                 .collect(Collectors.groupingBy(Offer::getProduct)).entrySet().stream()
                 .map(entry -> entry.getValue().stream().min(Comparator.comparingDouble(Offer::getPrice)).get())
                 .collect(Collectors.toList());

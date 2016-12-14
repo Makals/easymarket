@@ -12,25 +12,27 @@ public class ExtraStoreCrawler extends AbstractStoreCrawler {
 
     @Override
     protected void updateProductPrice(Offer offer, Document doc) {
-        Elements eProductPrice = doc.select(".box-price .price-off .sale-price, .box-price.boxNoOffer .price-off");
+        Elements eProductPrice = doc.select("#productForm .value");
 
         Double productPrice = null;
-        try {
-            String sProductPrice = eProductPrice.text().replaceAll("[^\\d,]", "");
+        String sProductPrice = eProductPrice.text().replaceAll("[^\\d,]", "");
 
-            productPrice = DecimalFormat.getNumberInstance(Locale.GERMAN).parse(sProductPrice).doubleValue();
-        } catch (ParseException exception) {
-            exception.printStackTrace();
+        if (!sProductPrice.isEmpty()) {
+            try {
+                productPrice = DecimalFormat.getNumberInstance(Locale.GERMAN).parse(sProductPrice).doubleValue();
+            } catch (ParseException exception) {
+                exception.printStackTrace();
+            }
+
+            productPrice = checkPromotions(doc, offer, productPrice);
         }
-
-        productPrice = checkPromotions(doc, offer, productPrice);
 
         offer.setPrice(productPrice);
     }
 
     @Override
     protected void updateProductAvailability(Offer offer, Document doc) {
-        offer.setAvailable(doc.select(".semEstoque").isEmpty());
+        offer.setAvailable(!doc.select("#productForm .btnComprarProd").isEmpty());
     }
 
     private Double checkPromotions(Document doc, Offer offer, Double productPrice) {

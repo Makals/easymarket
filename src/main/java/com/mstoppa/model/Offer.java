@@ -18,7 +18,7 @@ public class Offer {
     @ManyToOne(optional = false)
     private Store store;
 
-    @Column(nullable = false)
+    @Column
     private Double price;
 
     @Column(nullable = false)
@@ -94,5 +94,21 @@ public class Offer {
                 ", price=" + price +
                 ", available=" + available +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Offer offer = (Offer) o;
+
+        return id != null ? id.equals(offer.id) : offer.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
