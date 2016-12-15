@@ -20,7 +20,7 @@ public class OfferService {
     }
 
     public List<Offer> listOffers() {
-        return offerRepository.findAll();
+        return offerRepository.findAllWhereStoreIsActive();
     }
 
     public Offer createOffer(Offer offer) {

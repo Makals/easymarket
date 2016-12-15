@@ -14,6 +14,8 @@ public class StoreResource {
 
     private String url;
 
+    private boolean active;
+
     private Set<Offer> offers;
 
     public Long getId() {
@@ -46,6 +48,14 @@ public class StoreResource {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Set<Offer> getOffers() {

@@ -14,10 +14,14 @@ public class Store {
     @Column(nullable = false)
     private String name;
 
+    @Column
     private String description;
 
     @Column(nullable = false)
     private String url;
+
+    @Column(nullable = false)
+    private boolean active;
 
     @OneToMany
     private Set<Offer> offers;
@@ -58,6 +62,14 @@ public class Store {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Set<Offer> getOffers() {
